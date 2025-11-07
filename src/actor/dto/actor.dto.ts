@@ -1,4 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 // import { FilmDto } from '../film/film.dto';  // Film DTO를 별도로 만들어야 함
 
