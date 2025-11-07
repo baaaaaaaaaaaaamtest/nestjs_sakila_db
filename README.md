@@ -3,7 +3,7 @@
 NestJS를 활용한 연습 프로젝트입니다.  
 MySQL 기반의 **Sakila 오픈소스 데이터베이스**를 사용하여 실습을 진행했습니다.  
 REST API 중심의 CRUD 구현 및 DTO, Entity 구조 설계를 연습하기 위해 제작되었습니다.  
-추후 REST API를 제거하고 **GraphQL** 및 **MCP(Multi-Modal Communication Protocol)** 기반으로 전환할 예정입니다.
+추후 REST API를 제거하고 **GraphQL** 및 **MCP** 기반으로 전환할 예정입니다.
 
 아직 개발 진행중 
 
