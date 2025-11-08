@@ -1,19 +1,22 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {  ILike, Repository } from 'typeorm';
-import { ActorDto } from './dto/actor.dto';
-import { Actor } from './actor.entity';
-import { ActorSearchDto } from './dto/actorSearch.dto';
+import { ILike, Repository } from 'typeorm';
 import { plainToInstance } from 'class-transformer';
 import { getPaging } from '../utils/paging.util';
+import { Language } from './language.entity';
+import { LanguageSearchDto } from './dto/languageSearch.dto';
+import { LanguageDto } from './dto/language.dto';
+
+
 
 @Injectable()
-export class ActorService {
+export class LanguageService {
   constructor(
-    @InjectRepository(Actor)
-    private readonly repository: Repository<Actor>,
+    @InjectRepository(Language)
+    private readonly repository: Repository<Language>,
   ) {}
-  async searchActors(filter: ActorSearchDto): Promise<object> {
+
+  async searchCategory(filter: LanguageSearchDto): Promise<object> {
     const whereCondition = this.getCondition(filter)
 
     if (Object.keys(whereCondition).length === 0) {
@@ -22,9 +25,9 @@ export class ActorService {
 
     const results = await this.repository.findAndCount({
       where: whereCondition,
-      relations:['film']
+      relations:['films']  // films 숫자가 너무많은 경우 별도의 api를 호출하여 페이징 처리
     });
-    const response = plainToInstance(ActorDto, results,{excludeExtraneousValues:true});
+    const response = plainToInstance(LanguageDto, results[0], { excludeExtraneousValues: true });
     const paging = getPaging(results[1],filter)
     const sliceEntities = response.slice(paging.startIndex,paging.endIndex );
 
@@ -34,16 +37,13 @@ export class ActorService {
     };
   }
 
-  getCondition(filter: ActorSearchDto):object{
+  getCondition(filter: LanguageSearchDto):object{
     const whereCondition = {};
-    if (filter.actorId) {
-      whereCondition['actorId'] = filter.actorId;
+    if (filter.languageId) {
+      whereCondition['languageId'] = filter.languageId;
     }
-    if (filter.firstName) {
-      whereCondition['firstName'] = ILike(`%${filter.firstName}%`);
-    }
-    if (filter.lastName) {
-      whereCondition['lastName'] = ILike(`%${filter.lastName}%`);
+    if (filter.name) {
+      whereCondition['name'] = ILike(`%${filter.name}%`);
     }
     return whereCondition
   }

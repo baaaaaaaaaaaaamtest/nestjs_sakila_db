@@ -1,8 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Country } from '../../country/country.entity';
-import { Address } from '../../address/address.entity';
 import { Expose, Type } from 'class-transformer';
 import { AddressDto } from '../../address/dto/address.dto';
+import { CountryDto } from '../../country/dto/country.dto';
 
 
 export class CityDto {
@@ -12,9 +10,11 @@ export class CityDto {
   @Expose({ name: 'city' })
   city: string;
 
-  // @Expose({ name: 'country' })
-  country: Country;
+  @Expose({ name: 'country' })
+  @Type(() => CountryDto)
+  country: CountryDto;
 
-  // @Expose({ name: 'address' })
-  address: Address[];
+  @Expose({ name: 'address' })
+  @Type(() => AddressDto)
+  address: AddressDto[];
 }

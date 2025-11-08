@@ -7,7 +7,7 @@ import { CategoryService } from './category.service';
 
 @Controller('category')
 export class CategoryController {
-  constructor(private readonly categoryService:CategoryService ) {}
+  constructor(private readonly service:CategoryService ) {}
 
   // AND Search
   @Get('search')
@@ -15,6 +15,6 @@ export class CategoryController {
   @ApiResponse({ status: 200, description: 'Actors found', type: CategorySearchResponseDto })
   @ApiResponse({ status: 404, description: 'No actors found' })
   async search(@Query() filter: CategorySearchDto): Promise<object> {
-    return await this.categoryService.searchCategory(filter);
+    return await this.service.searchCategory(filter);
   }
 }

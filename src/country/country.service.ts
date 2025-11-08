@@ -1,19 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {  ILike, Repository } from 'typeorm';
-import { ActorDto } from './dto/actor.dto';
-import { Actor } from './actor.entity';
-import { ActorSearchDto } from './dto/actorSearch.dto';
+import { ILike, Repository } from 'typeorm';
+import { Country } from './country.entity';
 import { plainToInstance } from 'class-transformer';
 import { getPaging } from '../utils/paging.util';
+import { CountrySearchDto } from './dto/countrySearch.dto';
+import { CountryDto } from './dto/country.dto';
+
 
 @Injectable()
-export class ActorService {
+export class CountryService {
   constructor(
-    @InjectRepository(Actor)
-    private readonly repository: Repository<Actor>,
+    @InjectRepository(Country)
+    private readonly repository: Repository<Country>,
   ) {}
-  async searchActors(filter: ActorSearchDto): Promise<object> {
+
+  async searchCategory(filter: CountrySearchDto): Promise<object> {
     const whereCondition = this.getCondition(filter)
 
     if (Object.keys(whereCondition).length === 0) {
@@ -22,9 +24,9 @@ export class ActorService {
 
     const results = await this.repository.findAndCount({
       where: whereCondition,
-      relations:['film']
+      relations:['cities']
     });
-    const response = plainToInstance(ActorDto, results,{excludeExtraneousValues:true});
+    const response = plainToInstance(CountryDto, results[0], { excludeExtraneousValues: true });
     const paging = getPaging(results[1],filter)
     const sliceEntities = response.slice(paging.startIndex,paging.endIndex );
 
@@ -34,16 +36,13 @@ export class ActorService {
     };
   }
 
-  getCondition(filter: ActorSearchDto):object{
+  getCondition(filter: CountrySearchDto):object{
     const whereCondition = {};
-    if (filter.actorId) {
-      whereCondition['actorId'] = filter.actorId;
+    if (filter.countryId) {
+      whereCondition['countryId'] = filter.countryId;
     }
-    if (filter.firstName) {
-      whereCondition['firstName'] = ILike(`%${filter.firstName}%`);
-    }
-    if (filter.lastName) {
-      whereCondition['lastName'] = ILike(`%${filter.lastName}%`);
+    if (filter.country) {
+      whereCondition['country'] = ILike(`%${filter.country}%`);
     }
     return whereCondition
   }

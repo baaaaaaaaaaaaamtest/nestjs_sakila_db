@@ -10,7 +10,7 @@ import { ActorSearchResponseDto } from './dto/actorSearchResponse.dto';
 
 @Controller('actors')
 export class ActorController {
-  constructor(private readonly actorService: ActorService) {}
+  constructor(private readonly service: ActorService) {}
 
 
   // AND Search
@@ -19,6 +19,6 @@ export class ActorController {
   @ApiResponse({ status: 200, description: 'Actors found', type: ActorSearchResponseDto })
   @ApiResponse({ status: 404, description: 'No actors found' })
   async search(@Query() filter: ActorSearchDto): Promise<object> {
-    return await this.actorService.searchActors(filter);
+    return await this.service.searchActors(filter);
   }
 }

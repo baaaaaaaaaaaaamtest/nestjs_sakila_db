@@ -14,7 +14,7 @@ import { CityDto } from './dto/city.dto';
 export class CityService{
   constructor(
     @InjectRepository(City)
-    private readonly cityRepository: Repository<City>,
+    private readonly repository: Repository<City>,
   ) {}
 
   async searchCategory(filter: CitySearchDto): Promise<object> {
@@ -24,18 +24,14 @@ export class CityService{
       throw new NotFoundException('At least one search criteria must be provided.');
     }
 
-    const results = await this.cityRepository.findAndCount({
+    const results = await this.repository.findAndCount({
       where: whereCondition,
       relations:['country','address']
     });
     const response = plainToInstance(CityDto, results[0], { excludeExtraneousValues: true });
-    const totalItems = results[1]
-    const currentPage = filter.currentPage && filter.currentPage > 0 ? filter.currentPage : 1;
-    const paging = getPaging(currentPage,totalItems)
+    const paging = getPaging(results[1],filter)
     const sliceEntities = response.slice(paging.startIndex,paging.endIndex );
-    if (totalItems===0) {
-      throw new NotFoundException('No category found matching the criteria. ');
-    }
+
     return {
       entities : sliceEntities,
       paging:paging

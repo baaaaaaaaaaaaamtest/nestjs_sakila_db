@@ -1,19 +1,21 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { FilmService } from './film.service';
-import { Film } from './film.entity';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { FilmSearchResponseDto } from './dto/filmSearchResponse.dto';
+import { FilmSearchDto } from './dto/filmSearch.dto';
 
 @Controller('film')
 export class FilmController {
-  constructor(private readonly filmService: FilmService) {}
+  constructor(private readonly service: FilmService) {}
 
-  @Get()
-  getAll(): Promise<Film[]> {
-    return this.filmService.findAll();
+  @Get('search')
+  @ApiOperation({ summary: 'Search film by variable criteria' })
+  @ApiResponse({
+    status: 200,
+    description: 'film found',
+    type: FilmSearchResponseDto,
+  })
+  async getCountry(@Query() filter: FilmSearchDto): Promise<object> {
+    return await this.service.searchCategory(filter);
   }
-
-  @Get(':id')
-  getOne(@Param('id', ParseIntPipe) id: number): Promise<Film> {
-    return this.filmService.findOne(id);
-  }
-
 }

@@ -12,7 +12,7 @@ import { AddressSearchDto } from './dto/addressSearch.dto';
 export class AddressService {
   constructor(
     @InjectRepository(Address)
-    private readonly addressRepository: Repository<Address>,
+    private readonly repository: Repository<Address>,
   ) {}
 
   async searchAddresses(filter: AddressSearchDto): Promise<object> {
@@ -22,17 +22,13 @@ export class AddressService {
       throw new NotFoundException('At least one search criteria must be provided.');
     }
 
-    const results = await this.addressRepository.findAndCount({
+    const results = await this.repository.findAndCount({
       where: whereCondition
     });
     const response = plainToInstance(AddressDto, results[0],{excludeExtraneousValues:true});
-    const totalItems = results[1]
-    const currentPage = filter.currentPage && filter.currentPage > 0 ? filter.currentPage : 1;
-    const paging = getPaging(currentPage,totalItems)
+    const paging = getPaging(results[1],filter)
     const sliceEntities = response.slice(paging.startIndex,paging.endIndex );
-    if (totalItems===0) {
-      throw new NotFoundException('No addresses found matching the criteria. ');
-    }
+
     return {
       entities : sliceEntities,
       paging:paging

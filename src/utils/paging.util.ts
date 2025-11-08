@@ -1,5 +1,14 @@
+import { NotFoundException } from '@nestjs/common';
 
-export const getPaging = (currentPage:number,totalItems:any) =>{
+export const getPaging = (totalItem:number,filter:any) =>{
+
+  const totalItems = totalItem
+  if (totalItems===0) {
+    throw new NotFoundException('not found matching the criteria. ');
+  }
+
+  const currentPage = filter.currentPage && filter.currentPage > 0 ? filter.currentPage : 1;
+
   const pageSize = 5; // 한 페이지당 데이터 개수
   const maxPageListCount = 5; // 보여줄 페이지 번호의 최대 개수
 

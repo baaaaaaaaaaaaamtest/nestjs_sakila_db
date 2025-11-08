@@ -6,7 +6,7 @@ import { CitySearchResponseDto } from './dto/citySearchResponse.dto';
 
 @Controller('city')
 export class CityController {
-  constructor(private readonly cityService:CityService) {}
+  constructor(private readonly service:CityService) {}
 
   @Get('search')
   @ApiOperation({ summary: 'Search category by variable criteria' })
@@ -17,6 +17,6 @@ export class CityController {
   })
   @ApiResponse({ status: 404, description: 'No city found' })
   async search(@Query() filter: CitySearchDto): Promise<object> {
-    return await this.cityService.searchCategory(filter);
+    return await this.service.searchCategory(filter);
   }
 }

@@ -64,5 +64,5 @@ export class Film {
 
     @ManyToOne(() => Language, (Language) => Language.films)
     @JoinColumn({ name: 'language_id' })
-    language: Language; // Country 엔티티와 다대일 관계 설정
+    language: Language;
 }

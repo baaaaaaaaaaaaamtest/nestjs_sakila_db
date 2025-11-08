@@ -18,7 +18,6 @@ export class Language {
     @UpdateDateColumn({ name: 'last_update', type: 'timestamp' })
     lastUpdate: Date; // 마지막 갱신 일시
 
-
-  @OneToMany(() => Film, (film) => film.languageId)
-  films: Film[]; //주소 가진 여러 도시(1:N 관계)
+    @OneToMany(() => Film, (film) => film.language)
+    films: Film[]; //주소 가진 여러 도시(1:N 관계)
 }

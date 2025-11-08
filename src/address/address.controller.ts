@@ -11,7 +11,7 @@ import { AddressSearchResponseDto } from './dto/addressSearchResponse.dto';
 
 @Controller('address')
 export class AddressController {
-  constructor(private readonly addressService: AddressService) {
+  constructor(private readonly service: AddressService) {
   }
 
   // AND Search
@@ -20,7 +20,7 @@ export class AddressController {
   @ApiResponse({ status: 200, description: 'address found', type: [AddressSearchResponseDto] })
   @ApiResponse({ status: 404, description: 'No address found' })
   async search(@Query() filter: AddressSearchDto): Promise<object> {
-    return await this.addressService.searchAddresses(filter);
+    return await this.service.searchAddresses(filter);
   }
 
 }
