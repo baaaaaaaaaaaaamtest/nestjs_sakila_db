@@ -25,7 +25,7 @@ export class Payment {
     @Column({ name: 'rental_id' })
     rentalId: number;
 
-  @Column({ type: 'decimal', precision: 5, scale: 2 })
+    @Column({ type: 'decimal', precision: 5, scale: 2 })
     amount: number; // 결제 금액
 
     @Column({ name: 'payment_date', type: 'datetime' })

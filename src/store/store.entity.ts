@@ -28,20 +28,20 @@ export class Store {
     lastUpdate: Date; // 마지막 갱신 일시
 
 
-    @OneToMany(() => Inventory, (inventory) => inventory.storeId)
+    @OneToMany(() => Inventory, (inventory) => inventory.store)
     inventories: Inventory[]; // 보유 재고
 
-    @OneToMany(() => Customer, (customer) => customer.storeId)
+    @OneToMany(() => Customer, (customer) => customer.store)
     customers: Customer[]; // 매장 고객
 
-    @OneToMany(() => Staff, (staff) => staff.storeId)
-    manager: Staff[]; // 매장 고객
+    @OneToMany(() => Staff, (staff) => staff.store)
+    managers: Staff[]; // 매장 고객
 
     @ManyToOne(() => Address, (address) => address.stores)
     @JoinColumn({ name: 'address_id' })
     address: Address; // 매장 주소 (FK)
 
     @ManyToOne(() => Staff, (staff) => staff.stores)
-    @JoinColumn({ name: 'staff_id' })
-    managers: Staff; // 매장 주소 (FK)
+    @JoinColumn({ name: 'manager_staff_id' })
+    manager: Staff; // 매장 주소 (FK)
 }
