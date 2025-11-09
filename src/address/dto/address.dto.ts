@@ -1,5 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { FilmDto } from '../../film/dto/film.dto';
+import { CityDto } from '../../city/dto/city.dto';
+import { CustomerDto } from '../../customer/dto/customer.dto';
+import { StoreDto } from '../../store/dto/store.dto';
+import { StaffDto } from '../../staff/dto/staff.dto';
 
 
 export class AddressDto {
@@ -24,7 +28,20 @@ export class AddressDto {
   @Expose({ name: 'location' })
   location?: string;
 
-  lastUpdate: Date;
 
-  // cityId: FilmDto[];
+  @Expose({ name: 'city' })
+  @Type(() => CityDto)
+  city: CityDto;
+
+  @Expose({ name: 'customers' })
+  @Type(() => CustomerDto)
+  customers: CustomerDto[];
+
+  @Expose({ name: 'stores' })
+  @Type(() => StoreDto)
+  stores: StoreDto[];
+
+  @Expose({ name: 'staff' })
+  @Type(() => StaffDto)
+  staff: StaffDto[];
 }

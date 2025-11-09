@@ -47,13 +47,13 @@ export class Address {
     @JoinColumn({ name: 'city_id' })
     city: City;
 
-    @OneToMany(() => Customer, (customer) => customer.addressId)
+    @OneToMany(() => Customer, (customer) => customer.address)
     customers: Customer[]; // 대여 내역
 
-    @OneToMany(() => Store, (store) => store.addressId)
+    @OneToMany(() => Store, (store) => store.address)
     stores: Store[]; // 대여 내역
 
-    @OneToMany(() => Staff, (staff) => staff.addressId)
+    @OneToMany(() => Staff, (staff) => staff.address)
     staff: Staff[]; // Country 엔티티와 다대일 관계 설정
 
 

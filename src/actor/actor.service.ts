@@ -22,7 +22,7 @@ export class ActorService {
 
     const results = await this.repository.findAndCount({
       where: whereCondition,
-      relations:['film']
+      relations:['films']
     });
     const response = plainToInstance(ActorDto, results,{excludeExtraneousValues:true});
     const paging = getPaging(results[1],filter)

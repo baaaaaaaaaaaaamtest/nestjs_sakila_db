@@ -25,7 +25,12 @@ export class FilmService {
 
     const results = await this.repository.findAndCount({
       where: whereCondition,
-      relations:['actors','categories']
+      relations:[
+        'actors',
+        'categories',
+        'inventories',
+        'language'
+      ]
     });
     const response = plainToInstance(FilmDto, results[0], { excludeExtraneousValues: true });
     const paging = getPaging(results[1],filter)

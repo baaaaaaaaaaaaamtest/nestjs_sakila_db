@@ -24,7 +24,12 @@ export class CustomerService {
 
     const results = await this.repository.findAndCount({
       where: whereCondition,
-      relations:['address']
+      relations:[
+        'address',
+        'store',
+        'payments',
+        'rentals'
+      ]
     });
     const response = plainToInstance(CustomerDto, results[0], { excludeExtraneousValues: true });
     const paging = getPaging(results[1],filter)

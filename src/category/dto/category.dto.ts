@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { FilmDto } from '../../film/dto/film.dto';
 
 
 export class CategoryDto{
@@ -10,4 +11,7 @@ export class CategoryDto{
   @Expose({ name: 'name' })
   name: string;
 
+  @Expose({ name: 'films' })
+  @Type(() => FilmDto)
+  films: FilmDto[];
 }

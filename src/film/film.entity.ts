@@ -53,7 +53,7 @@ export class Film {
   @UpdateDateColumn({ name: 'last_update', type: 'timestamp' })
   lastUpdate: Date; // 최종 수정 시각
 
-    @OneToMany(() => Inventory, (inventory) => inventory.filmId)
+    @OneToMany(() => Inventory, (inventory) => inventory.film)
     inventories: Inventory[]; //주소 가진 여러 도시(1:N 관계)
 
     @ManyToMany(() => Actor, (actor) => actor.films)

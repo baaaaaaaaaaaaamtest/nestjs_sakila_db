@@ -23,7 +23,8 @@ export class AddressService {
     }
 
     const results = await this.repository.findAndCount({
-      where: whereCondition
+      where: whereCondition,
+      relations:['city','customers','stores','staff']
     });
     const response = plainToInstance(AddressDto, results[0],{excludeExtraneousValues:true});
     const paging = getPaging(results[1],filter)

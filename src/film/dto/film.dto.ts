@@ -1,6 +1,8 @@
 import { Expose, Type } from 'class-transformer';
 import { ActorDto } from '../../actor/dto/actor.dto';
 import { CategoryDto } from '../../category/dto/category.dto';
+import { InventoryDto } from '../../inventory/dto/inventory.dto';
+import { LanguageDto } from '../../language/dto/language.dto';
 
 export class FilmDto {
   @Expose({ name: 'filmId' })
@@ -41,6 +43,12 @@ export class FilmDto {
   @Type(() => CategoryDto)
   categories: CategoryDto[];
 
+  @Expose({ name: 'inventories' })
+  @Type(() => InventoryDto)
+  inventories: InventoryDto[];
 
+  @Expose({ name: 'language' })
+  @Type(() => LanguageDto)
+  language: LanguageDto;
 
 }

@@ -11,6 +11,7 @@ export class ActorSearchResponseDto {
         actorId: 1,
         firstName: 'nick.',
         lastName: 'john',
+        films:{}
       },
     ],
   })

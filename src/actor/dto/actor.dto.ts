@@ -1,5 +1,6 @@
-import { Expose } from 'class-transformer';
-// import { FilmDto } from '../film/film.dto';  // Film DTO를 별도로 만들어야 함
+import { Expose, Type } from 'class-transformer';
+import {FilmDto} from "../../film/dto/film.dto";
+import {AddressDto} from "../../address/dto/address.dto";
 
 export class ActorDto {
   @Expose({ name: 'actorId' })
@@ -13,6 +14,7 @@ export class ActorDto {
 
   lastUpdate: Date;
 
-  // @ApiProperty({ type: [FilmDto] })
-  // films: FilmDto[];
+  @Expose({ name: 'films' })
+  @Type(() => FilmDto)
+  films: FilmDto[];
 }

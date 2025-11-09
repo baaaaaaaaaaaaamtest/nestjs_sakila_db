@@ -23,7 +23,8 @@ export class CategoryService{
     }
 
     const results = await this.repository.findAndCount({
-      where: whereCondition
+      where: whereCondition,
+      relations:['films']      // films item 이 너무많아 추후 따로 조회 필요
     });
     const response = plainToInstance(CategoryDto, results[0], { excludeExtraneousValues: true });
     const paging = getPaging(results[1],filter)

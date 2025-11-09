@@ -17,4 +17,5 @@ export class CityDto {
   @Expose({ name: 'address' })
   @Type(() => AddressDto)
   address: AddressDto[];
+
 }
